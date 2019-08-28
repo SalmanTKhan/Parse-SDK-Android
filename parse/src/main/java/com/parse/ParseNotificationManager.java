@@ -23,18 +23,18 @@ class ParseNotificationManager {
     public static ParseNotificationManager getInstance() {
         return Singleton.INSTANCE;
     }
-
+    
     public void showNotification(Context context, Notification notification) {
+        showNotification(System.currentTimeMillis(), context, notification);
+    }
+
+    public void showNotification(int notificationId, Context context, Notification notification) {
         if (context != null && notification != null) {
             notificationCount.incrementAndGet();
 
             // Fire off the notification
             NotificationManager nm =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-            // Pick an id that probably won't overlap anything
-            int notificationId = (int) System.currentTimeMillis();
-
             try {
                 nm.notify(notificationId, notification);
             } catch (SecurityException e) {
